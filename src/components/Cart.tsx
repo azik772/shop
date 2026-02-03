@@ -127,69 +127,128 @@ const Cart = () => {
       <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
       {cart.length > 0 ? (
         <>
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((itm: any, i: number) => (
-                <tr key={i}>
-                  <td>
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((itm: any, i: number) => (
+                  <tr key={i}>
+                    <td>
+                      <img
+                        className="w-[100px] h-[100px] object-cover"
+                        src={itm.img}
+                        alt=""
+                      />
+                    </td>
+                    <td>
+                      <h1>{itm.title}</h1>
+                    </td>
+                    <td>
+                      <h1>${itm.price}</h1>
+                    </td>
+                    <td>
+                      <div className="flex gap-3 items-center">
+                        <button
+                          onClick={() => handleMinus(itm.id)}
+                          className="btn btn-danger btn-sm"
+                        >
+                          -
+                        </button>
+                        <h1 className="font-bold">{itm.count}</h1>
+                        <button
+                          onClick={() => handlePlus(itm.id)}
+                          className="btn btn-success btn-sm"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+                    <td>
+                      <h1 className="font-semibold">
+                        ${(Number(itm.price) * itm.count).toFixed(2)}
+                      </h1>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleRemove(itm.id)}
+                        className="btn btn-danger btn-sm"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Cards */}
+          <div className="md:hidden space-y-4">
+            {cart.map((itm: any, i: number) => (
+              <div key={i} className="card bg-base-100 shadow-md">
+                <div className="card-body p-4">
+                  <div className="flex gap-4">
                     <img
-                      className="w-[100px] h-[100px] object-cover"
+                      className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded"
                       src={itm.img}
                       alt=""
                     />
-                  </td>
-                  <td>
-                    <h1>{itm.title}</h1>
-                  </td>
-                  <td>
-                    <h1>${itm.price}</h1>
-                  </td>
-                  <td>
-                    <div className="flex gap-3 items-center">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-sm sm:text-base">
+                        {itm.title}
+                      </h3>
+                      <p className="text-sm text-gray-600">${itm.price}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex gap-2 items-center">
                       <button
                         onClick={() => handleMinus(itm.id)}
-                        className="btn btn-danger btn-sm"
+                        className="btn btn-danger btn-xs sm:btn-sm"
                       >
                         -
                       </button>
-                      <h1 className="font-bold">{itm.count}</h1>
+                      <span className="font-bold text-sm sm:text-base px-2">
+                        {itm.count}
+                      </span>
                       <button
                         onClick={() => handlePlus(itm.id)}
-                        className="btn btn-success btn-sm"
+                        className="btn btn-success btn-xs sm:btn-sm"
                       >
                         +
                       </button>
                     </div>
-                  </td>
-                  <td>
-                    <h1 className="font-semibold">
-                      ${(Number(itm.price) * itm.count).toFixed(2)}
-                    </h1>
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => handleRemove(itm.id)}
-                      className="btn btn-danger btn-sm"
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="mt-4 text-right">
-            <h2 className="text-2xl font-bold">
+                    <div className="text-right">
+                      <p className="font-semibold text-sm sm:text-base">
+                        ${(Number(itm.price) * itm.count).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleRemove(itm.id)}
+                    className="btn btn-danger btn-sm w-full mt-3"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 text-right">
+            <h2 className="text-xl sm:text-2xl font-bold">
               Total: ${totalPrice.toFixed(2)}
             </h2>
           </div>

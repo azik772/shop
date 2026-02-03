@@ -78,24 +78,30 @@ const Like = () => {
     }
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">Liked Products ❤️</h2>
+      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center">
+        Liked Products ❤️
+      </h2>
       {liked.length > 0 ? (
-        <div className="grid md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {liked.map((itm: any, id: number) => (
             <div
               key={id}
-              className="flex flex-col items-center justify-center border rounded-lg p-4 shadow hover:shadow-lg transition"
+              className="flex flex-col items-center justify-center border rounded-lg p-3 sm:p-4 shadow hover:shadow-lg transition"
             >
               <img
-                className="w-[150px] h-[150px] object-cover rounded mb-2"
+                className="w-24 h-24 sm:w-32 sm:h-32 md:w-[150px] md:h-[150px] object-cover rounded mb-2"
                 src={itm.img}
                 alt=""
               />
-              <h1 className="font-semibold">Name: {itm.title}</h1>
-              <h2 className="text-green-600">Price: ${itm.price}</h2>
+              <h1 className="font-semibold text-sm sm:text-base text-center line-clamp-2">
+                {itm.title}
+              </h1>
+              <h2 className="text-green-600 text-sm sm:text-base mt-1">
+                ${itm.price}
+              </h2>
               <button
                 onClick={() => handleRemove(itm.id)}
-                className="btn btn-danger btn-sm mt-2"
+                className="btn btn-danger btn-xs sm:btn-sm w-full mt-2"
               >
                 Remove
               </button>
