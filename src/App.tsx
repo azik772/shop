@@ -106,62 +106,118 @@ import SignUp from "./pages/SignUp";
 import { useSelector } from "react-redux";
 import { signInWithPopup } from "firebase/auth";
 import { auth, google } from "./firebase.config";
- export const SignwithGoogle = async () => {
-   const result = await signInWithPopup(auth, google);
-   const user = result.user;
-   alert(` Welcome,${user.displayName}`);
- };
+import { useState } from "react";
+export const SignwithGoogle = async () => {
+  const result = await signInWithPopup(auth, google);
+  const user = result.user;
+  alert(` Welcome,${user.displayName}`);
+};
 const App = () => {
- 
   const { cart, like } = useSelector((state: any) => state.shop);
-
+  const [open, setOpen] = useState(false);
   return (
     <div>
-      <div className="flex justify-between items-center px-10 py-5 gap-2 bg-green-500">
-        <Link className="text-3xl text-white text-decoration-none" to={"/add"}>
-          Products
-        </Link>
-        <Link className="text-3xl text-white text-decoration-none" to={"/"}>
-          + Add Product
-        </Link>
-        <input
-          type="search"
-          className="border w-[280px] h-[50px] border-white bg-white rounded-[10px] text-center"
-          placeholder="search..."
-        />
-        <div className="flex gap-4">
-          <div className="flex items-center gap-2">
-            <Link
-              className="text-3xl text-white text-decoration-none"
-              to={"/like"}
-            >
-              ❤️
+      <div className="bg-green-500 px-4 md:px-10 py-4">
+        <div className="flex justify-between items-center">
+          <Link
+            className="text-2xl md:text-3xl text-white text-decoration-none"
+            to={"/add"}
+          >
+            Products
+          </Link>
+
+          <div className="hidden md:flex items-center gap-6  ">
+            <Link className="text-2xl text-white text-decoration-none" to={"/"}>
+              Add Product
             </Link>
-            {like?.length > 0 && (
-              <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
-                {like.length}
-              </span>
-            )}
+
+            <input
+              type="search"
+              className="border w-[280px] h-[45px] border-white bg-white rounded-lg text-center"
+              placeholder="search..."
+            />
+
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <Link
+                  className="text-2xl text-white text-decoration-none "
+                  to={"/like"}
+                >
+                  ❤️
+                </Link>
+                {like?.length > 0 && (
+                  <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
+                    {like.length}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  className="text-2xl text-white text-decoration-none"
+                  to={"/cart"}
+                >
+                  🛒
+                </Link>
+                {cart?.length > 0 && (
+                  <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
+                    {cart.length}
+                  </span>
+                )}
+              </div>
+
+              <Link
+                to={"/sign-in"}
+                className="btn btn-primary text-decoration-none"
+              >
+                Sign In
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Link
-              className="text-3xl text-white text-decoration-none"
-              to={"/cart"}
-            >
-              🛒
+
+          <button
+            className="md:hidden text-3xl text-white"
+            onClick={() => setOpen(!open)}
+          >
+            ☰
+          </button>
+        </div>
+
+        {open && (
+          <div className="flex flex-col gap-4 mt-4 md:hidden">
+            <Link className="text-white text-lg text-decoration-none" to={"/"}>
+              + Add Product
             </Link>
-            {cart?.length > 0 && (
-              <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
-                {cart.length}
-              </span>
-            )}
-          </div>
-          <div>
-            <Link to={"/sign-in"} className="btn btn-primary">
+
+            <input
+              type="search"
+              className="border w-full h-[45px] border-white bg-white rounded-lg text-center"
+              placeholder="search..."
+            />
+
+            <div className="flex gap-6">
+              <Link
+                className="text-2xl text-white text-decoration-none"
+                to={"/like"}
+              >
+                ❤️ {like?.length > 0 && `(${like.length})`}
+              </Link>
+              <Link
+                className="text-2xl text-white text-decoration-none"
+                to={"/cart"}
+              >
+                🛒 {cart?.length > 0 && `(${cart.length})`}
+              </Link>
+            </div>
+
+            <Link
+              to={"/sign-in"}
+              className="bg-white text-green-600 px-4 py-2 rounded-lg w-fit text-decoration-none"
+            >
               Sign In
             </Link>
           </div>
-        </div>
+        )}
       </div>
 
       <Routes>

@@ -77,16 +77,18 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-6 px-4">
       <form
-        className="w-[400px] border rounded-lg shadow-lg p-6 mx-auto"
+        className="w-full max-w-[420px] border rounded-xl shadow-lg p-5 sm:p-6 mx-auto"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Add New Product</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">
+          Add New Product
+        </h2>
 
         <input
           placeholder="Product name..."
-          className="form-control mb-3"
+          className="form-control mb-3 h-[45px] sm:h-[50px]"
           onChange={(e) => dispatch(shopActions.setTitle(e.target.value))}
           type="text"
           required
@@ -94,7 +96,7 @@ const Home = () => {
 
         <input
           placeholder="Price..."
-          className="form-control mb-3"
+          className="form-control mb-3 h-[45px] sm:h-[50px]"
           onChange={(e) => dispatch(shopActions.setPrice(e.target.value))}
           type="number"
           step="0.01"
@@ -125,12 +127,15 @@ const Home = () => {
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-[200px] h-[200px] object-cover mx-auto rounded"
+              className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] object-cover mx-auto rounded-lg"
             />
           </div>
         )}
 
-        <button type="submit" className="btn btn-primary w-full">
+        <button
+          type="submit"
+          className="btn btn-primary w-full py-2 sm:py-3 text-base sm:text-lg"
+        >
           Add Product
         </button>
       </form>
